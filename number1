@@ -1,0 +1,77 @@
+class buy:
+    pay_rate = 1
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+    def apply_discount(self):
+        self.price = self.price * self.pay_rate
+
+    def sum_total(self):
+        return self.price * self.quantity
+    
+    def display(self):
+        print("isim: " + str(self.name))
+        print("Tutar: " + str(self.price) + "TL")
+        print("Miktar: " + str(self.quantity))
+        print("Toplam: " + str(self.sum_total()) + "TL\n")
+
+items = []
+while True:
+    flow = int(input("Ne yapmak istiyorsun?\n1. Yeni bir nesne ekle\n2. Bir nesneyi görüntüle\n3. Bir nesneyi değiştir \n4. Indirim uygula\n5. Tüm nesneleri görüntüle\n6. Hiçbir şey\n"))
+
+    #yeni nesne ekleme
+    if flow == 1:
+        the_name = input("İsim: ")
+        the_price = int(input("Kaç TL: "))
+        the_quantity = int(input("Kaç tane: "))
+
+        new_item = buy(the_name, the_price, the_quantity)
+
+        items.append(new_item)
+        print("Nesne eklendi!")
+    #nesne görüntüleme
+    elif flow == 2:
+        sira = int(input("Kaçinci nesneyi görüntülemek istersiniz: "))
+        sira -=1 
+        if 0 <= sira < len(items):
+            items[sira].display()
+        else:
+            print("Geçerli bir numara giriniz!")
+    #nesne değiştirme
+    elif flow == 3:
+        sira = int(input("Kaçinci nesneyi değiştirmek istersiniz: "))
+        if 0 <= sira < len(items):
+            items[sira].name = input("İsim: ")
+            items[sira].price = int(input("Kaç TL: "))
+            items[sira].quantity = int(input("Kaç tane: "))
+        else:
+            print("Geçerli bir sayi giriniz!")
+    
+        print("Nesne değiştirildi!")
+    #nesne indirim
+    elif flow == 4:
+        sira = int(input("Kaçinci nesneye indirim uygulamak istersiniz: "))
+        if 0 <= sira < len(items):
+            sira -= 1
+            pay_rate = float(input("Ne kadar indirim uygulamak istediğinizi 1-0 arasinda belirtiniz: "))
+            items[sira].pay_rate = 1 - pay_rate
+            items[sira].apply_discount()
+        else:
+            print("Geçerli bir sayi giriniz!")   
+
+        print("İndirim uygulandi!")
+    #tüm nesneleri görüntüleme
+    elif flow == 5:
+        for sira, item in enumerate(items):
+            print(f"Nesne {sira + 1}")
+            item.display()
+    #bitiş
+    elif flow == 6:
+        print("Görüşürüz!")
+        break
+
+    else:
+        print("Geçerli bir sayi giriniz!")
+
